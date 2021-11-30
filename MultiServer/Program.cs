@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace MultiServer
 {
@@ -82,20 +84,20 @@ namespace MultiServer
                 clientSockets.Remove(current);
                 return;
             }
-
             byte[] recBuf = new byte[received];
             Array.Copy(buffer, recBuf, received);
             string text = Encoding.ASCII.GetString(recBuf);
+            string[] textsplit = Regex.Split(text, @",");
             Console.WriteLine("Received Text: " + text);
 
-            if (text.ToLower() == "get time") // Client requested time
+            if (textsplit[0].ToLower() == "get time") // Client requested time
             {
                 Console.WriteLine("Text is a get time request");
                 byte[] data = Encoding.ASCII.GetBytes(DateTime.Now.ToLongTimeString());
                 current.Send(data);
                 Console.WriteLine("Time sent to client");
             }
-            else if (text.ToLower() == "exit") // Client wants to exit gracefully
+            else if (textsplit[0].ToLower() == "exit") // Client wants to exit gracefully
             {
                 // Always Shutdown before closing
                 current.Shutdown(SocketShutdown.Both);
@@ -103,6 +105,27 @@ namespace MultiServer
                 clientSockets.Remove(current);
                 Console.WriteLine("Client disconnected");
                 return;
+            }
+            else if (textsplit[0].ToLower() == "new client") // Client requested new client
+            {
+                Console.WriteLine("Request for new client");
+                byte[] data = Encoding.ASCII.GetBytes("StartNew");
+                current.Send(data);
+                Console.WriteLine("New Client Iniltialized");
+            }
+            else if (textsplit[0].ToLower() == "add") // Client request add item
+            {
+                Console.WriteLine("Request for inventory");
+                byte[] data = Encoding.ASCII.GetBytes(textsplit[1]);
+                current.Send(data);
+                Console.WriteLine($"Added ", textsplit[1], " to inventory.");
+            }
+            else if (textsplit[0].ToLower() == "show") // Client requested show item
+            {
+                Console.WriteLine("Request for show");
+                byte[] data = Encoding.ASCII.GetBytes(textsplit[1]);
+                current.Send(data);
+                Console.WriteLine("Showing item from client inventory");
             }
             else
             {

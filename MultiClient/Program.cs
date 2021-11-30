@@ -2,6 +2,8 @@
 using System.Net.Sockets;
 using System.Net;
 using System.Text;
+using System.Diagnostics;
+using System.Text.RegularExpressions;
 
 namespace MultiClient
 {
@@ -11,6 +13,8 @@ namespace MultiClient
             (AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
         private const int PORT = 100;
+        public static int addmode = 0;
+        public static int showmode = 0;
 
         static void Main()
         {
@@ -69,11 +73,20 @@ namespace MultiClient
         {
             Console.Write("Send a request: ");
             string request = Console.ReadLine();
+            string[] textsplit = Regex.Split(request, @",");
             SendString(request);
 
             if (request.ToLower() == "exit")
             {
                 Exit();
+            }
+            else if (textsplit[0].ToLower() == "add")
+            {
+                addmode = 1;
+            }
+            else if (textsplit[0].ToLower() == "show")
+            {
+                showmode = 1;
             }
         }
 
@@ -94,7 +107,31 @@ namespace MultiClient
             var data = new byte[received];
             Array.Copy(buffer, data, received);
             string text = Encoding.ASCII.GetString(data);
-            Console.WriteLine(text);
+            if (text == "StartNew")
+            {
+                Process.Start("Multi Client.exe");
+                Console.WriteLine("New Client was Initialized");
+            }
+            else if (addmode == 1)
+            {
+                Inventory.Inv.Add(text);
+                addmode = 0;
+                Console.WriteLine("Item was added");
+            }
+            else if (showmode == 1)
+            {
+                try
+                {
+                    text = Inventory.Inv[Convert.ToInt32(text)];
+                    Console.WriteLine(text);
+                }
+                catch (SystemException)
+                {
+                    Console.WriteLine("Invalid Index");
+                }
+                showmode = 0;
+            }
+            
         }
     }
 }

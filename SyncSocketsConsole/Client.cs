@@ -2,6 +2,7 @@
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace SyncSocketsConsole
 {
@@ -11,6 +12,7 @@ namespace SyncSocketsConsole
     class Client
     {
         private Socket clientSocket;
+        int addmode = 0;
 
         public void StartSendLoop()
         {
@@ -30,6 +32,7 @@ namespace SyncSocketsConsole
                         clientSocket.Close();
                         Environment.Exit(0);
                     }
+
 
                     clientSocket.Send(Encoding.ASCII.GetBytes(input));
                     Console.Clear();
