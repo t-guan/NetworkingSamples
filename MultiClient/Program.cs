@@ -4,6 +4,7 @@ using System.Net;
 using System.Text;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
+using Amazoom;
 
 namespace MultiClient
 {
@@ -116,6 +117,8 @@ namespace MultiClient
             {
                 Inventory.Inv.Add(text);
                 addmode = 0;
+                int[,] dockloc = { { 0, 0, 1 } };
+                Warehouse.initialize_warehouse(1, 5, 5, dockloc);
                 Console.WriteLine("Item was added");
             }
             else if (showmode == 1)
