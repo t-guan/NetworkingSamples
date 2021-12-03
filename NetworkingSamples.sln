@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31624.102
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicAsyncClient", "BasicAsyncClient\BasicAsyncClient.csproj", "{4EAC8522-45C1-4195-BC7C-86850F320C61}"
 EndProject
@@ -11,7 +11,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SyncSocketsConsole", "SyncS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiServer", "MultiServer\MultiServer.csproj", "{841DAD7C-427C-4F5A-9E39-4EE71EFE81D2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiClient", "MultiClient\MultiClient.csproj", "{E73DCBEE-3F3A-4185-A6B6-57DAB5412D12}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiClient(WH)", "MultiClient\MultiClient(WH).csproj", "{E73DCBEE-3F3A-4185-A6B6-57DAB5412D12}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiClient(Customer)", "MultiClient(Customer)\MultiClient(Customer).csproj", "{3F6C76C2-34E0-4BC9-B102-8BA37E773161}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVCClientCustomer", "MVCClientCustomer\MVCClientCustomer.csproj", "{9A082BE2-616E-4A99-9DE9-B64FE711C54E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,8 +43,19 @@ Global
 		{E73DCBEE-3F3A-4185-A6B6-57DAB5412D12}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E73DCBEE-3F3A-4185-A6B6-57DAB5412D12}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E73DCBEE-3F3A-4185-A6B6-57DAB5412D12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F6C76C2-34E0-4BC9-B102-8BA37E773161}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F6C76C2-34E0-4BC9-B102-8BA37E773161}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F6C76C2-34E0-4BC9-B102-8BA37E773161}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F6C76C2-34E0-4BC9-B102-8BA37E773161}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A082BE2-616E-4A99-9DE9-B64FE711C54E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A082BE2-616E-4A99-9DE9-B64FE711C54E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A082BE2-616E-4A99-9DE9-B64FE711C54E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A082BE2-616E-4A99-9DE9-B64FE711C54E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E6F38709-EE0C-4E5C-A283-5C46BADE6232}
 	EndGlobalSection
 EndGlobal

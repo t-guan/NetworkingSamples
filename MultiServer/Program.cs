@@ -118,7 +118,7 @@ namespace MultiServer
                 Console.WriteLine("Request for inventory");
                 byte[] data = Encoding.ASCII.GetBytes(textsplit[1]);
                 current.Send(data);
-                Console.WriteLine($"Added ", textsplit[1], " to inventory.");
+                Console.WriteLine("Added " + textsplit[1]+ " to inventory.");
             }
             else if (textsplit[0].ToLower() == "show") // Client requested show item
             {
@@ -126,6 +126,13 @@ namespace MultiServer
                 byte[] data = Encoding.ASCII.GetBytes(textsplit[1]);
                 current.Send(data);
                 Console.WriteLine("Showing item from client inventory");
+            }
+            else if (textsplit[0].ToLower() == "warehouses")
+            {
+                Console.WriteLine("Request all clients");
+                byte[] data = Encoding.ASCII.GetBytes("There are: "+clientSockets.Count.ToString()+ " warehouses");
+                current.Send(data);
+                Console.WriteLine("Request Sent");
             }
             else
             {

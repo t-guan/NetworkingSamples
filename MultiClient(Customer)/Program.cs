@@ -1,14 +1,19 @@
-﻿using System;
-using System.Net.Sockets;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
+using System.Net.Sockets;
 using System.Text;
-using System.Diagnostics;
 using System.Text.RegularExpressions;
-using Amazoom;
+using System.Threading.Tasks;
 
-namespace MultiClient
+namespace MultiClient_Customer_
 {
-    class Program
+    public class Program
     {
         private static readonly Socket ClientSocket = new Socket
             (AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
@@ -17,14 +22,12 @@ namespace MultiClient
         public static int addmode = 0;
         public static int showmode = 0;
 
-        static void Main()
+        public static void Main(string[] args)
         {
-            Console.Title = "Client";
+            CreateHostBuilder(args).Build().Run();
             ConnectToServer();
             RequestLoop();
-            Exit();
         }
-
         private static void ConnectToServer()
         {
             int attempts = 0;
@@ -38,7 +41,7 @@ namespace MultiClient
                     // Change IPAddress.Loopback to a remote IP to connect to a remote host.
                     ClientSocket.Connect(IPAddress.Loopback, PORT);
                 }
-                catch (SocketException) 
+                catch (SocketException)
                 {
                     Console.Clear();
                 }
@@ -58,10 +61,6 @@ namespace MultiClient
                 ReceiveResponse();
             }
         }
-
-        /// <summary>
-        /// Close socket and exit program.
-        /// </summary>
         private static void Exit()
         {
             SendString("exit"); // Tell the server we are exiting
@@ -77,7 +76,7 @@ namespace MultiClient
             string[] textsplit = Regex.Split(request, @",");
             SendString(request);
 
-            if (request.ToLower() == "exit")
+            if (request.ToLower() == "exit") 
             {
                 Exit();
             }
@@ -91,15 +90,11 @@ namespace MultiClient
             }
         }
 
-        /// <summary>
-        /// Sends a string to the server with ASCII encoding.
-        /// </summary>
         private static void SendString(string text)
         {
             byte[] buffer = Encoding.ASCII.GetBytes(text);
             ClientSocket.Send(buffer, 0, buffer.Length, SocketFlags.None);
         }
-
         private static void ReceiveResponse()
         {
             var buffer = new byte[2048];
@@ -110,35 +105,14 @@ namespace MultiClient
             string text = Encoding.ASCII.GetString(data);
             if (text == "StartNew")
             {
-                Process.Start("Multi Client.exe");
                 Console.WriteLine("New Client was Initialized");
             }
-            else if (addmode == 1)
-            {
-                Inventory.Inv.Add(text);
-                addmode = 0;
-                int[,] dockloc = { { 0, 0, 1 } };
-                Warehouse.initialize_warehouse(1, 5, 5, dockloc);
-                Console.WriteLine("Item was added");
-            }
-            else if (showmode == 1)
-            {
-                try
-                {
-                    text = Inventory.Inv[Convert.ToInt32(text)];
-                    Console.WriteLine(text);
-                }
-                catch (SystemException)
-                {
-                    Console.WriteLine("Invalid Index");
-                }
-                showmode = 0;
-            }
-            else
-            {
-                Console.WriteLine(text);
-            }
-            
         }
+            public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.UseStartup<Startup>();
+                });
     }
 }
