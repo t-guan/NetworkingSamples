@@ -33,5 +33,14 @@ namespace MVCClientCustomer.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+        [HttpPost]
+        public ActionResult GetNumber(int number1)
+        {
+            if (number1 == 0)
+            {
+                //Connect to Webserver?
+            }
+            return View();
+        }
     }
 }
